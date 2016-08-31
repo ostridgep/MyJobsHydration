@@ -1,0 +1,124 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<title>MyJobs - Vehicle Check</title>
+<script src="resources/sap-ui-core.js" type="text/javascript"
+       id="sap-ui-bootstrap" data-sap-ui-libs="sap.m,sap.ui.commons"
+       data-sap-ui-theme="sap_bluecrystal">
+       
+</script>
+<script src="myresources/js/html5sql.js"></script>  
+
+ <script type="text/javascript" src="cordova.js"></script> 
+
+
+<script type="text/javascript">
+function getImage() {
+    // Retrieve image file location from specified source
+   
+    navigator.camera.getPicture(uploadPhoto, function(message) {
+	alert('get picture failed');
+},{quality:100, destinationType:Camera.DestinationType.FILE_URI}
+    );
+
+}
+var theFolder;
+var theFile;
+var d = new Date();
+var n = d.getTime();
+//new file name
+var newFileName = n + ".jpg";
+var myFolderApp = "MyAppFolder";
+function uploadPhoto(imageURI) {
+	 
+	   
+    var options = new FileUploadOptions();
+    options.fileKey="file";
+    options.fileName=imageURI.substr(imageURI.lastIndexOf('/')+1);
+    options.mimeType="image/jpeg";
+
+    var params = new Object();
+    params.user = "POSTRIDGE";
+    params.filename = options.fileName;
+
+    options.params = params;
+    options.chunkedMode = false;
+alert(options.fileName);
+    var ft = new FileTransfer();
+    alert(imageURI);
+    ft.upload(imageURI, "http://192.168.1.20/FileUpload.php", win, fail, options);
+    //ft.upload(imageURI, "http://192.168.1.20/FileUpload.php?user=POSTRIDGE&filename=x.jpg", win, fail, options);
+    uploadPhoto1(imageURI);
+}
+function uploadPhoto1(imageURI) {
+	 
+   var options = new FileUploadOptions();
+   options.fileKey="file";
+   options.fileName=imageURI.substr(imageURI.lastIndexOf('/')+1);
+   options.mimeType="image/jpeg";
+
+   var params = new Object();
+   params.user = "POSTRIDGE";
+   params.filename = "Local"+options.fileName;
+
+   options.params = params;
+   options.chunkedMode = false;
+
+   var ft = new FileTransfer();
+   alert("xx"+imageURI);
+   ft.upload(imageURI, "http://192.168.1.20/FileUpload.php", win, fail, options);
+}
+function win(r) {
+    alert("Code = " + r.responseCode);
+    alert("Response = " + r.response);
+    alert("Sent = " + r.bytesSent);
+   
+}
+
+function fail(error) {
+    alert("An error has occurred: Code = " = error.code);
+}
+
+
+function movePic(file){ 
+    window.resolveLocalFileSystemURI(file, resolveOnSuccess, resOnError); 
+} 
+
+//Callback function when the file system uri has been resolved
+function resolveOnSuccess(entry){ 
+
+   alert("here")
+
+    window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, function(fileSys) {      
+    //The folder is created if doesn't exist
+    fileSys.root.getDirectory( myFolderApp,
+                    {create:true, exclusive: false},
+                    function(directory) {
+                        entry.moveTo(directory, newFileName,  successMove, resOnError);
+                    },
+                    resOnError);
+                    },
+    resOnError);
+}
+
+//Callback function when the file has been moved successfully - inserting the complete path
+function successMove(entry) {
+    //Store imagepath in session for future use
+    // like to store it in database
+    sessionStorage.setItem('imagepath', entry.fullPath);
+    uploadPhoto1("file:"+entry.fullPath)
+}
+
+function resOnError(error) {
+    alert(error.code);
+}
+</script>
+
+<BR>15:50<BR><BR>
+<button onclick="getImage();">Upload a Photo</button><BR><BR>
+<button onclick="window.location.href='Home.html'">Home</button>
+
+</body>
+
+</html>
