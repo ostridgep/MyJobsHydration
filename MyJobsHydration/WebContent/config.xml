@@ -18,12 +18,12 @@
 
 
     <preference name="permissions"                 value="none"/>
-    <preference name="android-windowSoftInputMode" value="stateVisible|adjustResize" />
+    <preference name="android-windowSoftInputMode" value="stateVisible|adjustResize"/>
     <preference name="CameraUsesGeolocation"       value="true" />
 
-    <!-- Customize your app and platform with the preference element. -->
+    
  
-    <preference name='phonegap-version' value='cli-5.2.0' />
+    <preference name='phonegap-version' 		  value='cli-5.2.0' />
     <preference name="orientation"                value="all" />            <!-- all: default means both landscape and portrait are enabled -->
     <preference name="target-device"              value="universal" />      <!-- all: possible values handset, tablet, or universal -->
     <preference name="fullscreen"                 value="false" />          <!-- all: hides the status bar at the top of the screen -->
@@ -43,8 +43,8 @@
     <preference name="iosPersistentFileLocation"  value="Library" />
     <preference name="AndroidExtraFilesystems"    value="files,files-external,documents,sdcard,cache,cache-external,root" />
     <preference name="SplashScreen" value="splash"/>
-<preference name="SplashScreenDelay" value="3000"/>
-<preference name="AutoHideSplashScreen" value="false"/>
+	<preference name="SplashScreenDelay" value="3000"/>
+	<preference name="AutoHideSplashScreen" value="false"/>
     <!-- Plugins -->
 
 
@@ -60,7 +60,7 @@
     <gap:plugin name="org.apache.cordova.device-orientation" />
     <gap:plugin name="org.apache.cordova.dialogs" />
     <gap:plugin name="com.ionic.keyboard" />
-    <gap:plugin name="cordova-hot-code-push-plugin" source="npm"/>
+    <gap:plugin name="cordova-hot-code-push-cli" source="npm" />
     <gap:plugin name="cordova-plugin-splashscreen" spec="2.1.0" source="pgb" />
     <gap:plugin name="com.venkykowshik.startapp" spec="0.0.1" source="pgb" />
   
